@@ -3,12 +3,14 @@
 ### Problem Statement
 
 In this assignment step 7, we will try to filter the data from CSV file with much more complex queries using lambda expression. Our query is expected to contain `aggregate functions, group by, order by, aggregate group by`.
+
 For example:
  - select city,winner,team1,team2 from ipl.csv where city='Bangalore' order by winner
  - select winner, count(*) from ipl.csv group by winner;
  - select city, sum(win_by_runs) from ipl.csv group by city
  - select count(city), sum(win_by_runs), min(season), max(win_by_wickets) from ipl.csv
  - Finally store the filtered data in JSON file.
+
 ### Expected solution
 
 A JSON file containing the filtered result set.
