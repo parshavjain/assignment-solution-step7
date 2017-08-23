@@ -1,4 +1,4 @@
-## Seed code - Boilerplate for step 6 - DataMungee Assignment(PLEASE CHANGE THIS README POST CLONING - SAVE THE INSTRUCTIONS SEPERATELY)
+## Seed code - Boilerplate for step 7 - DataMungee Assignment(PLEASE CHANGE THIS README POST CLONING - SAVE THE INSTRUCTIONS SEPERATELY)
 
 ### Problem Statement
 
