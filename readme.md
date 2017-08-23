@@ -46,9 +46,11 @@ The folders and files you see in this repositories, is how it is expected to be 
 	|		└── RowDataTypeDefinitions.java             // This class will be used to store the column data types as columnIndex/DataType
 	|	└── reader
 	|		└── CsvAggregateQueryProcessor.java         // this is the CsvAggregateQueryProcessor class used for evaluating queries with aggregate functions without group by clause
-	|		└── CsvGroupByAggregateQueryProcessor.java  // this is the CsvGroupByAggregateQueryProcessor class used for evaluating queries with aggregate functions and group by clause
-	|		└── CsvGroupByQueryProcessor.java           // this is the CsvGroupByQueryProcessor class used for evaluating queries without aggregate functions but with group by clause
+	|		└── CsvGroupByQueryProcessor.java  // this is the CsvGroupByAggregateQueryProcessor class used for evaluating queries with aggregate functions and group by clause
+	|		└── CsvOrderByQueryProcessor.java           // this is the CsvGroupByQueryProcessor class used for evaluating queries without aggregate functions but with group by clause
 	|		└── CsvQueryProcessor.java                  // This class is used to read data from CSV file
+	|		└── CsvWhereQueryProcessor.java             // This class will read from CSV file and process and return the resultSet based on Where clause 
+	                                                        //Filter is user defined utility class where we defined the methods related to filter fields, filter records.
 	|		└── QueryProcessingEngine.java              //abstract class containing three abstract methods that should be implemented in CsvQueryProcessor class
 	|	└── test                                        // all your test cases are written using JUnit, these test cases can be run by selecting Run As -> JUnit Test 
 	|	└── writer
