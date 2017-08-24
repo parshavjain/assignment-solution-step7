@@ -20,7 +20,8 @@ import java.util.Map;
  * 
  **/
 public class QueryParameter {
-//Better to write separate (private)function to get each query parameter.
-//Set each parameter to QueryParameter instance.
+//Declare the query parameters listed above and generate getter/setter methods.
+//No other logic should present in this class.
+//This is simple POJO Class ( A Class with properties and getter/setter methods.)
 			
 }
