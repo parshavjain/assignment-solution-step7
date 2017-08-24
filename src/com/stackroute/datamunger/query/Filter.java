@@ -34,9 +34,13 @@ public class Filter {
 		return null;
 	}
 	
+	/**
+	 * This method return true if the record is required 'where' condition
+	 * If not it returns false.
+	 **/
 	private boolean evaluateRelationalExpression(List<String> record, Restriction restriction) {
 		
-		return null;
+		return true;
 	}
 
 }
