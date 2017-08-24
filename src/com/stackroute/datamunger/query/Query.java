@@ -1,21 +1,5 @@
 package com.stackroute.datamunger.query;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.stackroute.datamunger.query.parser.QueryParameter;
-import com.stackroute.datamunger.query.parser.QueryParser;
-import com.stackroute.datamunger.reader.CsvAggregateQueryProcessor;
-import com.stackroute.datamunger.reader.CsvGroupByQueryProcessor;
-import com.stackroute.datamunger.reader.CsvOrderByQueryProcessor;
-import com.stackroute.datamunger.reader.CsvQueryProcessor;
-import com.stackroute.datamunger.reader.CsvWhereQueryProcessor;
-import com.stackroute.datamunger.reader.QueryProcessingEngine;
 
 /**
  * This class is used to execute the query with the help of different Query Processors.
@@ -29,29 +13,17 @@ public class Query {
 	public DataSet executeQuery(String queryString) {
 		
 	
-		// checking type of Query
-	
-		
-		// queries without aggregate functions, order by clause or group by clause
-		
-		
-		//queries with aggregate functions
-		
-		
-		//Queries with group by clause
+	//Get the type of query from queryString
+	//Based on the type of query,  create the instance of the particular class
+	//Note:  We created one interface called QueryEngine 
+	//and implemented this in other concrete classes like CsvWhereQueryProcessor, CsvQueryProcessor,CsvOrderByQueryProcessor,CsvAggregateQueryProcessor
+	//CsvGroupByQueryProcessor.
+	//Once you create the instance of one of the above class, we can call executeQuery method which overridden in all thse classes.
+	//This executeQuery method will return the result set.
 		
 		return null;
 	}
 	
-	
-	private void setHeader() {
-		
-			// read the header record
-		
-	}
 
-	private void setSelectedFieldIndex() {
-	
-	}
 
 }
