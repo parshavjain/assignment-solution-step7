@@ -1,4 +1,4 @@
-## Seed code - Boilerplate for step 7 - DataMungee Assignment
+## Seed code - Boilerplate for step 7 - Database Engine Assignment
 
 ### Problem Statement
 
