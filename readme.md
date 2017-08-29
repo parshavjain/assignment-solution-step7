@@ -11,6 +11,9 @@ For example:
  - select count(city), sum(win_by_runs), min(season), max(win_by_wickets) from ipl.csv
  - Finally store the filtered data in JSON file.
 
+`Note : Once you have cloned boilerplate from the given gitlab URL, import the project into eclipse and try to run your test cases. 
+Your project's test cases will show compile time error for methods, as you have not written the complete code.`
+
 ### Expected solution
 
 A JSON file containing the filtered result set.
