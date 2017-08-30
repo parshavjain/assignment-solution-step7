@@ -73,25 +73,41 @@ The folders and files you see in this repositories, is how it is expected to be 
 
 #### To use this as a boilerplate for your new project, you can follow these steps
 
-1. Clone the base boilerplate in your local
+1. Clone the base boilerplate in the folder **assignment-solution-step7** of your local machine
+     
+    `git clone https://gitlab-dev.stackroute.in/datamunger-java/step-7-Boilerplate.git assignment-solution-step7`
 
-	`git clone  https://gitlab-dev.stackroute.in/datamunger-java/step-7-Boilerplate.git`
+2. Navigate to assignment-solution-step7 folder
 
-2. Remove its remote or original reference
+    `cd assignment-solution-step7`
 
-	`git remote rm origin`
+3. Remove its remote or original reference
 
-3. Add your new repository reference as remote
+     `git remote rm origin`
 
-	`git remote add origin ssh://git@gitlab-dev.stackroute.in:2222/yourusername/your-new-project-repo.git`
+4. Create a new repo in gitlab named `assignment-solution-step7` as private repo
 
-4. Commit and Push the project to git
+5. Add your new repository reference as remote
 
-	`git commit -a -m "Initial commit | or place your comments according to your need"`
+     `git remote add origin https://gitlab.training.com/{{yourusername}}/assignment-solution-step7.git`
 
-	`git push -u origin master`
+     **Note: {{yourusername}} should be replaced by your username from gitlab**
 
-5. Check on the git repo online, if the files have been pushed
+5. Check the status of your repo 
+     
+     `git status`
+
+6. Use the following command to update the index using the current content found in the working tree, to prepare the content staged for the next commit.
+
+     `git add .`
+ 
+7. Commit and Push the project to git
+
+     `git commit -a -m "Initial commit | or place your comments according to your need"`
+
+     `git push -u origin master`
+
+8. Check on the git repo online, if the files have been pushed
 
 
 ### Important instructions for Participants
