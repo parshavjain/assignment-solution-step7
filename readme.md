@@ -9,14 +9,24 @@ As the data in CSV file are the string, we can use equals() built-in method.  On
 For other aggregate functions like sum, min, max, total only we need to find out data type.     When the query consists of an aggregate function, then only we convert into the required data type.  Otherwise, it is not required.
 
 ### In this assignment, 
-1. We will work with array list
-2. We will get all aggregate functions together while needing one aggregate function.  This is because we are using Java 8 built in class like **DoubleSummaryStatistics,
-LongSummaryStatistics
-IntSummaryStatistics**
-3. We will not use DataTypeDefinition and RowTypeDefinition classes.
-4. We will not implement JSON convertion as well.
+1. We will use Java 8 concepts like lamda expressions, predicates and streams.  We will work with array list.  
+2. We will get all aggregate functions together even we require only one aggregate function.  This is because we are using Java 8 built in classes like 
+   **DoubleSummaryStatistics, LongSummaryStatistics , IntSummaryStatistics**
+3. We will not use DataTypeDefinition and RowTypeDefinition classes. 
+    Actually the data type is not required for all type of queries. Like "selet * from ipl.csv" we no need to find out data type.
+    So, whenever we required then only we will convert the data into specific type.
+    **When we required the data type ?**
+    a)We require Data type of particular column when we sort / compare with relational operators/find aggregate functions.  
+    At that point only we can find what is the type of data.                                                                                                                                                                                                     
+    b)Even to compare whether the data equal / not equal, we no need to find data type.                                                                                                                                                   
+    As the data in csv file are string, we can use equals() built-in method.  Only for comparing <. >, <=, >= only we need to find the type of data. 
+    Whenever query contains this relational operator, we can convert the String data into required data type.                                                                                                               
+    c)For Aggregate function - count - also no need to find out data type.                                                                                                                                                           
+    For other aggregate functions like sum, min, max, total only we need to find out data type.    
+    When the query consist of aggregate function, then only we convert into required data type.  Otherwise it is not required.
+4.  We will not implement JSON convertion as well(as of now).  The main intention of this step 7 is to work with java 8 concepts like lamda expressions, predicates and streams.
 
-### Expected solution
+### Sample queires and output
 
 For Example
 
