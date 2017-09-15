@@ -76,7 +76,7 @@ For Example
 - parse the query
 - forward the object of query parameter to CsvQueryProcessor
 - filter out rows basis on the conditions mentioned in the where clause
-- write the result set into a JSON file
+
 
 ### Project structure
 
