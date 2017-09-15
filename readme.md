@@ -2,21 +2,138 @@
 
 ### Problem Statement
 
-In this assignment step 7, we will try to filter the data from CSV file with much more complex queries using lambda expression. Our query is expected to contain `aggregate functions, group by, order by, aggregate group by`.
+In this assignment step 7, we will try to filter the data from CSV file with much more complex queries using lambda expression predicate or streams. Our query is expected to contain aggregate functions, group by, order by, aggregate group by.
 
-For example:
- - select city,winner,team1,team2 from ipl.csv where city='Bangalore' order by winner
- - select winner, count(*) from ipl.csv group by winner;
- - select city, sum(win_by_runs) from ipl.csv group by city
- - select count(city), sum(win_by_runs), min(season), max(win_by_wickets) from ipl.csv
- - Finally store the filtered data in JSON file.
+As the Data type of particular column is required only when we sort / compare with relational operators/find aggregate functions.  At that point only we can find what is the type of data. Even to compare whether the data is equal / not equal, hence we no need to find data type.                                                                                                                                                                                                                                                                                                                                As the data in CSV file are the string, we can use equals() built-in method.  Only for comparing <. >, <=, >= only we need to find the type of data. Whenever query contains this relational operator, we can convert the String data into the required data type. For Aggregate function - count - also we need not to find out the datatype.                                                                                                                                                           For other aggregate functions like sum, min, max, total only we need to find out data type.     When the query consists of an aggregate function, then only we convert into the required data type.  Otherwise, it is not required.
 
-`Note : Once you have cloned boilerplate from the given gitlab URL, import the project into eclipse. 
-Your project’s test cases might show compile time errors for methods, as you have not written the complete code.`
+In this assignment, 
+1. We will work with array list
+2. We will get all aggregate functions together while needing one aggregate function.  This is because we are using Java 8 built in class called DoubleSummaryStatistics
+LongSummaryStatistics
+IntSummaryStatistics
+3. We will not use DataTypeDefinition and RowTypeDefinition classes.
+4. We will not implement JSON convertion as well.
 
 ### Expected solution
 
-A JSON file containing the filtered result set.
+For Example
+
+1. Input from the User : **select city,winner,team1,team2 from ipl.csv where city='Bangalore' order by winner**
+
+            Expected output:
+            {
+              "result": [
+                [
+                  "Bangalore",
+                  "",
+                  "Royal Challengers Bangalore",
+                  "Rajasthan Royals"
+                ],
+                [
+                  "Bangalore",
+                  "",
+                  "Delhi Daredevils",
+                  "Royal Challengers Bangalore"
+                ],
+                [
+                  "Bangalore",
+                  "Chennai Super Kings",
+                  "Chennai Super Kings",
+                  "Royal Challengers Bangalore"
+                ],......
+                  ......
+              ]
+            }
+
+2. Input from the User : **select city,count(*) from data/ipl.csv group by city**
+            
+            Expected Output:
+            {
+              "groupByAggregateResult": {
+                "": {
+                  "count": 7,
+                  "sum": 2870.0,
+                  "sumCompensation": 0.0,
+                  "simpleSum": 2870.0,
+                  "min": 403.0,
+                  "max": 418.0
+                },
+                "Ahmedabad": {
+                  "count": 12,
+                  "sum": 4155.0,
+                  "sumCompensation": 0.0,
+                  "simpleSum": 4155.0,
+                  "min": 121.0,
+                  "max": 481.0
+                }, ...........
+                   ...........
+              }
+            }
+
+3. Input from the User: **select city, sum(win_by_runs) from ipl.csv group by city**
+            
+            Expected Output:
+            {
+              "groupByAggregateResult": {
+                "": {
+                  "count": 7,
+                  "sum": 26.0,
+                  "sumCompensation": 0.0,
+                  "simpleSum": 26.0,
+                  "min": 0.0,
+                  "max": 15.0
+                },
+                "Ahmedabad": {
+                  "count": 12,
+                  "sum": 180.0,
+                  "sumCompensation": 0.0,
+                  "simpleSum": 180.0,
+                  "min": 0.0,
+                  "max": 62.0
+                },
+              }
+            }
+
+4. Input from the User: **select count(city), sum(win_by_runs), min(season), max(win_by_wickets) from ipl.csv**
+
+            Expected Output:
+            {
+              "result": [
+                [
+                  "count(city) :570",
+                  "sum(win_by_runs) :7914",
+                  "min(season) :2008",
+                  "max(win_by_wickets) :10"
+                ]
+              ],
+              "aggregateFunctions": [
+                {
+                  "field": "city",
+                  "result": 570,
+                  "function": "count",
+                  "aggregateFieldIndex": 0
+                },
+                {
+                  "field": "win_by_runs",
+                  "result": 7914,
+                  "function": "sum",
+                  "aggregateFieldIndex": 0
+                },
+                {
+                  "field": "season",
+                  "result": 2008,
+                  "function": "min",
+                  "aggregateFieldIndex": 0
+                },
+                {
+                  "field": "win_by_wickets",
+                  "result": 10,
+                  "function": "max",
+                  "aggregateFieldIndex": 0
+                }
+              ]
+            }
+
 
 ### Following are the broad tasks:
 
