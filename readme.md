@@ -8,7 +8,7 @@ As the Data type of particular column is required only when we sort / compare wi
 As the data in CSV file are the string, we can use equals() built-in method.  Only for comparing <. >, <=, >= only we need to find the type of data. Whenever query contains this relational operator, we can convert the String data into the required data type. For Aggregate function - count - also we need not to find out the datatype.                                                                                                                                                           
 For other aggregate functions like sum, min, max, total only we need to find out data type.     When the query consists of an aggregate function, then only we convert into the required data type.  Otherwise, it is not required.
 
-In this assignment, 
+### In this assignment, 
 1. We will work with array list
 2. We will get all aggregate functions together while needing one aggregate function.  This is because we are using Java 8 built in class like **DoubleSummaryStatistics,
 LongSummaryStatistics
