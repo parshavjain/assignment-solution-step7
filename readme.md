@@ -8,9 +8,9 @@ As the Data type of particular column is required only when we sort / compare wi
 
 In this assignment, 
 1. We will work with array list
-2. We will get all aggregate functions together while needing one aggregate function.  This is because we are using Java 8 built in class called DoubleSummaryStatistics
+2. We will get all aggregate functions together while needing one aggregate function.  This is because we are using Java 8 built in class like **DoubleSummaryStatistics,
 LongSummaryStatistics
-IntSummaryStatistics
+IntSummaryStatistics**
 3. We will not use DataTypeDefinition and RowTypeDefinition classes.
 4. We will not implement JSON convertion as well.
 
@@ -18,122 +18,55 @@ IntSummaryStatistics
 
 For Example
 
-1. Input from the User : **select city,winner,team1,team2 from ipl.csv where city='Bangalore' order by winner**
+1. Input from the User : **select city,avg(win_by_wickets) from data/ipl.csv group by city**
+        
+        Expected Output: 
+        =DoubleSummaryStatistics{count=7, sum=23.000000, min=0.000000, average=3.285714, max=7.000000}
+        Ahmedabad=DoubleSummaryStatistics{count=12, sum=38.000000, min=0.000000, average=3.166667, max=9.000000}
+        Delhi=DoubleSummaryStatistics{count=53, sum=175.000000, min=0.000000, average=3.301887, max=10.000000}
+        Sharjah=DoubleSummaryStatistics{count=6, sum=26.000000, min=0.000000, average=4.333333, max=8.000000}
 
-            Expected output:
-            {
-              "result": [
-                [
-                  "Bangalore",
-                  "",
-                  "Royal Challengers Bangalore",
-                  "Rajasthan Royals"
-                ],
-                [
-                  "Bangalore",
-                  "",
-                  "Delhi Daredevils",
-                  "Royal Challengers Bangalore"
-                ],
-                [
-                  "Bangalore",
-                  "Chennai Super Kings",
-                  "Chennai Super Kings",
-                  "Royal Challengers Bangalore"
-                ],......
-                  ......
-              ]
-            }
+2. Input from the User : **select city,max(win_by_wickets) from data/ipl.csv group by city**
 
-2. Input from the User : **select city,count(*) from data/ipl.csv group by city**
-            
-            Expected Output:
-            {
-              "groupByAggregateResult": {
-                "": {
-                  "count": 7,
-                  "sum": 2870.0,
-                  "sumCompensation": 0.0,
-                  "simpleSum": 2870.0,
-                  "min": 403.0,
-                  "max": 418.0
-                },
-                "Ahmedabad": {
-                  "count": 12,
-                  "sum": 4155.0,
-                  "sumCompensation": 0.0,
-                  "simpleSum": 4155.0,
-                  "min": 121.0,
-                  "max": 481.0
-                }, ...........
-                   ...........
-              }
-            }
+        Expected Output:
+        =DoubleSummaryStatistics{count=7, sum=23.000000, min=0.000000, average=3.285714, max=7.000000}
+        Ahmedabad=DoubleSummaryStatistics{count=12, sum=38.000000, min=0.000000, average=3.166667, max=9.000000}
+        Delhi=DoubleSummaryStatistics{count=53, sum=175.000000, min=0.000000, average=3.301887, max=10.000000}
+        Sharjah=DoubleSummaryStatistics{count=6, sum=26.000000, min=0.000000, average=4.333333, max=8.000000}
+        Rajkot=DoubleSummaryStatistics{count=5, sum=31.000000, min=0.000000, average=6.200000, max=10.000000}
 
-3. Input from the User: **select city, sum(win_by_runs) from ipl.csv group by city**
-            
-            Expected Output:
-            {
-              "groupByAggregateResult": {
-                "": {
-                  "count": 7,
-                  "sum": 26.0,
-                  "sumCompensation": 0.0,
-                  "simpleSum": 26.0,
-                  "min": 0.0,
-                  "max": 15.0
-                },
-                "Ahmedabad": {
-                  "count": 12,
-                  "sum": 180.0,
-                  "sumCompensation": 0.0,
-                  "simpleSum": 180.0,
-                  "min": 0.0,
-                  "max": 62.0
-                },
-              }
-            }
+3. Input from the User: **select city,sum(season) from data/ipl.csv group by city**
 
-4. Input from the User: **select count(city), sum(win_by_runs), min(season), max(win_by_wickets) from ipl.csv**
+        Expected Output:
+        =DoubleSummaryStatistics{count=7, sum=14098.000000, min=2014.000000, average=2014.000000, max=2014.000000}
+        Ahmedabad=DoubleSummaryStatistics{count=12, sum=24156.000000, min=2010.000000, average=2013.000000, max=2015.000000}
+        Delhi=DoubleSummaryStatistics{count=53, sum=106652.000000, min=2008.000000, average=2012.301887, max=2016.000000}
+        Sharjah=DoubleSummaryStatistics{count=6, sum=12084.000000, min=2014.000000, average=2014.000000, max=2014.000000}
+        Rajkot=DoubleSummaryStatistics{count=5, sum=10080.000000, min=2016.000000, average=2016.000000, max=2016.000000}
 
-            Expected Output:
-            {
-              "result": [
-                [
-                  "count(city) :570",
-                  "sum(win_by_runs) :7914",
-                  "min(season) :2008",
-                  "max(win_by_wickets) :10"
-                ]
-              ],
-              "aggregateFunctions": [
-                {
-                  "field": "city",
-                  "result": 570,
-                  "function": "count",
-                  "aggregateFieldIndex": 0
-                },
-                {
-                  "field": "win_by_runs",
-                  "result": 7914,
-                  "function": "sum",
-                  "aggregateFieldIndex": 0
-                },
-                {
-                  "field": "season",
-                  "result": 2008,
-                  "function": "min",
-                  "aggregateFieldIndex": 0
-                },
-                {
-                  "field": "win_by_wickets",
-                  "result": 10,
-                  "function": "max",
-                  "aggregateFieldIndex": 0
-                }
-              ]
-            }
+4. Input from the User: **select city,count(win_by_wickets) from data/ipl.csv group by city**
+        
+        Expected Output:
+        =DoubleSummaryStatistics{count=7, sum=23.000000, min=0.000000, average=3.285714, max=7.000000}
+        Ahmedabad=DoubleSummaryStatistics{count=12, sum=38.000000, min=0.000000, average=3.166667, max=9.000000}
+        Delhi=DoubleSummaryStatistics{count=53, sum=175.000000, min=0.000000, average=3.301887, max=10.000000}
+        Sharjah=DoubleSummaryStatistics{count=6, sum=26.000000, min=0.000000, average=4.333333, max=8.000000}
+        Rajkot=DoubleSummaryStatistics{count=5, sum=31.000000, min=0.000000, average=6.200000, max=10.000000}
 
+5. Input from the User: **select count(city) from data/ipl.csv**
+
+        Expected Output: 
+        count(city): 570
+        
+6. Input from the User: **select city,count(*) from data/ipl.csv group by city**
+
+        Expected Output:
+        =DoubleSummaryStatistics{count=7, sum=2870.000000, min=403.000000, average=410.000000, max=418.000000}
+        Ahmedabad=DoubleSummaryStatistics{count=12, sum=4155.000000, min=121.000000, average=346.250000, max=481.000000}
+        Delhi=DoubleSummaryStatistics{count=53, sum=16210.000000, min=3.000000, average=305.849057, max=576.000000}
+        Sharjah=DoubleSummaryStatistics{count=6, sum=2450.000000, min=400.000000, average=408.333333, max=415.000000}
+        Rajkot=DoubleSummaryStatistics{count=5, sum=2684.000000, min=523.000000, average=536.800000, max=548.000000}
+        Johannesburg=DoubleSummaryStatistics{count=8, sum=807.000000, min=82.000000, average=100.875000, max=115.000000}
 
 ### Following are the broad tasks:
 
