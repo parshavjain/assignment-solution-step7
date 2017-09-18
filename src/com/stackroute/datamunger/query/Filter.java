@@ -31,7 +31,7 @@ public class Filter {
 	 **/
 	public boolean isRequiredRecord(QueryParameter queryParameter, List<String> record) {
 		
-		return null;
+		return true;
 	}
 	
 	/**
