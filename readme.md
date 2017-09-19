@@ -19,9 +19,11 @@ For other aggregate functions like sum, min, max, total only we need to find out
      **When we required the data type ?**
     a)We require Data type of particular column when we sort / compare with relational operators/find aggregate functions.  
     At that point only we can find what is the type of data.                                                                                                                                                                                                     
+    
     b)Even to compare whether the data equal / not equal, we no need to find data type.                                                                                                                                                   
     As the data in csv file are string, we can use equals() built-in method.  Only for comparing <. >, <=, >= only we need to find the type of data. 
     Whenever query contains this relational operator, we can convert the String data into required data type.                                                                                                               
+    
     c)For Aggregate function - count - also no need to find out data type.                                                                                                                                                           
     For other aggregate functions like sum, min, max, total only we need to find out data type.    
     When the query consist of aggregate function, then only we convert into required data type.  Otherwise it is not required.
