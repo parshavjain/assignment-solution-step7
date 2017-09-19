@@ -15,7 +15,8 @@ For other aggregate functions like sum, min, max, total only we need to find out
 3. We will not use DataTypeDefinition and RowTypeDefinition classes. 
     Actually the data type is not required for all type of queries. Like "selet * from ipl.csv" we no need to find out data type.
     So, whenever we required then only we will convert the data into specific type.
-    **When we required the data type ?**
+   
+     **When we required the data type ?**
     a)We require Data type of particular column when we sort / compare with relational operators/find aggregate functions.  
     At that point only we can find what is the type of data.                                                                                                                                                                                                     
     b)Even to compare whether the data equal / not equal, we no need to find data type.                                                                                                                                                   
