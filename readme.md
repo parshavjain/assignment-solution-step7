@@ -17,6 +17,7 @@ For other aggregate functions like sum, min, max, total only we need to find out
     So, whenever we required then only we will convert the data into specific type.
    
      **When we required the data type ?**
+
     a)We require Data type of particular column when we sort / compare with relational operators/find aggregate functions.  
     At that point only we can find what is the type of data.                                                                                                                                                                                                     
     
@@ -27,6 +28,7 @@ For other aggregate functions like sum, min, max, total only we need to find out
     c)For Aggregate function - count - also no need to find out data type.                                                                                                                                                           
     For other aggregate functions like sum, min, max, total only we need to find out data type.    
     When the query consist of aggregate function, then only we convert into required data type.  Otherwise it is not required.
+
 4.  We will not implement JSON convertion as well(as of now).  The main intention of this step 7 is to work with java 8 concepts like lamda expressions, predicates and streams.
 
 ### Sample queires and output
