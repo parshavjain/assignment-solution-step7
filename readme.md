@@ -104,13 +104,9 @@ The folders and files you see in this repositories, is how it is expected to be 
 	|			└── QueryParser.java                    // This class will parse the queryString and return an object of QueryParameter class
 	|			└── Restriction.java	                // This class is for storing Restriction object
 	|		└── DataSet.java 		                    // This class will be acting as the DataSet containing multiple rows
-	|		└── DataTypeDefinitions.java                // This class contains methods to find the column data types
 	|		└── Filter.java 		                    // This class contains methods to evaluate expressions
-	|       └── GenericComparator.java                  // this class contains the implementation of the custom comparator which can work for all data types
-	|		└── Header.java                             // This class implements the getHeader method to return a Header object which contains a String array for containing headers.
-	|		└── Query.java                              // This class selects the appropriate processor based on the type of query
-	|		└── Row.java                                //This class contains the row object as ColumnName/Value 
-	|		└── RowDataTypeDefinitions.java             // This class will be used to store the column data types as columnIndex/DataType
+	|       └── GroupedDataSet.java                 
+	|		└── Query.java                              // This class is used to execute the query with the help of different Query Processors and decide what type of Query processors you required.
 	|	└── reader
 	|		└── CsvAggregateQueryProcessor.java         // this is the CsvAggregateQueryProcessor class used for evaluating queries with aggregate functions without group by clause
 	|		└── CsvGroupByQueryProcessor.java  // this is the CsvGroupByAggregateQueryProcessor class used for evaluating queries with aggregate functions and group by clause
@@ -120,8 +116,7 @@ The folders and files you see in this repositories, is how it is expected to be 
 	                                                        //Filter is user defined utility class where we defined the methods related to filter fields, filter records.
 	|		└── QueryProcessingEngine.java              //abstract class containing three abstract methods that should be implemented in CsvQueryProcessor class
 	|	└── test                                        // all your test cases are written using JUnit, these test cases can be run by selecting Run As -> JUnit Test 
-	|	└── writer
-	|		└── JsonWriter.java                         // This class writes the result in a JSON file
+	|		└── DataMungerTest.java
 	|	└── DataMunger.java	                            // This is the main file, all your logic is written in this file only
 	|
 	├── .classpath			                            // This file is generated automatically while creating the project in eclipse
