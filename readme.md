@@ -2,11 +2,12 @@
 
 ### Problem Statement
 
-In this assignment step 7, we will try to filter the data from CSV file with much more complex queries using lambda expression predicate or streams. Our query is expected to contain aggregate functions, group by, order by, aggregate group by.
+In this assignment step 7, we will try to filter the data from CSV file with much more **complex queries using lambda expression predicate or streams**. Our query is expected to contain **aggregate functions, group by, order by, aggregate group by.**
 
-As the Data type of particular column is required only when we sort / compare with relational operators/find aggregate functions.  At that point only we can find what is the type of data. Even to compare whether the data is equal / not equal, hence we no need to find data type.                                                                                                                                                                                                                                                                                                                                
-As the data in CSV file are the string, we can use equals() built-in method.  Only for comparing <. >, <=, >= only we need to find the type of data. Whenever query contains this relational operator, we can convert the String data into the required data type. For Aggregate function - count - also we need not to find out the datatype.                                                                                                                                                           
-For other aggregate functions like sum, min, max, total only we need to find out data type.     When the query consists of an aggregate function, then only we convert into the required data type.  Otherwise, it is not required.
+As the Data type of particular column is required only when we sort / compare with relational operators/find aggregate functions, at that point only we can find what is the type of data. Even to compare whether the data is equal / not equal, hence we no need to find data type.                                                                                                                                                                                                                                                                                                                                
+As the data in CSV file are the string, we can use equals() built-in method.  Only for comparing <. >, <=, >= we need to find the type of data. Whenever query contains this relational operator, we can convert the String data into the required data type. For Aggregate function - count - also we need not to find out the datatype.                                                                                                                                                           
+For other aggregate functions like sum, min, max, total we need to find out data type.     
+When the query consists of an aggregate function, then only we convert into the required data type.  Otherwise, it is not required.
 
 ### In this assignment, 
 1. We will use Java 8 concepts like lamda expressions, predicates and streams.  We will work with array list.  
@@ -99,7 +100,7 @@ The folders and files you see in this repositories, is how it is expected to be 
 
 	Project
 	|
-	├── resources 			                    // If project needs any data file, it can be found here/placed here, if data is huge they can be mounted, no need put it in your repository
+	├── data 			                    // If project needs any data file, it can be found here/placed here, if data is huge they can be mounted, no need put it in your repository
 	|
 	├── com.stackroute.datamunger	            // all your java file will be stored in this package
 	|	└── query
@@ -110,7 +111,7 @@ The folders and files you see in this repositories, is how it is expected to be 
 	|			└── Restriction.java	                // This class is for storing Restriction object
 	|		└── DataSet.java 		                    // This class will be acting as the DataSet containing multiple rows
 	|		└── Filter.java 		                    // This class contains methods to evaluate expressions
-	|       └── GroupedDataSet.java                 
+	|       └── GroupedDataSet.java                     // This class contains LinkedHashMap to store String and its objects
 	|		└── Query.java                              // This class is used to execute the query with the help of different Query Processors and decide what type of Query processors you required.
 	|	└── reader
 	|		└── CsvAggregateQueryProcessor.java         // this is the CsvAggregateQueryProcessor class used for evaluating queries with aggregate functions without group by clause
@@ -119,8 +120,8 @@ The folders and files you see in this repositories, is how it is expected to be 
 	|		└── CsvQueryProcessor.java                  // This class is used to read data from CSV file
 	|		└── CsvWhereQueryProcessor.java             // This class will read from CSV file and process and return the resultSet based on Where clause 
 	                                                        //Filter is user defined utility class where we defined the methods related to filter fields, filter records.
-	|		└── QueryProcessingEngine.java              //abstract class containing three abstract methods that should be implemented in CsvQueryProcessor class
-	|	└── test                                        // all your test cases are written using JUnit, these test cases can be run by selecting Run As -> JUnit Test 
+	|		└── QueryProcessingEngine.java              //The interface which has a method executeQuery(QueryParameter queryParameter) and one method getHeader with definition.
+	|	└── test                                        // All your test cases are written using JUnit, these test cases can be run by selecting Run As -> JUnit Test 
 	|		└── DataMungerTest.java
 	|	└── DataMunger.java	                            // This is the main file, all your logic is written in this file only
 	|
