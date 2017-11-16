@@ -11,11 +11,10 @@ package com.stackroute.datamunger.query.parser;
  **/
 
 public class AggregateFunction {
-
 	
 	private String field;
 
-	private int result;
+	private double result;
 
 	private String function;
 
@@ -37,11 +36,11 @@ public class AggregateFunction {
 		this.field = field;
 	}
 
-	public int getResult() {
+	public double getResult() {
 		return result;
 	}
 
-	public void setResult(int result) {
+	public void setResult(double result) {
 		this.result = result;
 	}
 
@@ -52,8 +51,4 @@ public class AggregateFunction {
 	public void setFunction(String function) {
 		this.function = function;
 	}
-	
-
-
-
 }
