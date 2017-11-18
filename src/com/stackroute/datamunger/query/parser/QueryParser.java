@@ -216,9 +216,9 @@ public class QueryParser {
 			final String[] fromSplit = selectSplit[1].split(" from ");
 			final String[] commaSplit = fromSplit[0].split(",");
 			for (int i = 0; i < commaSplit.length; i++) {
-				if (!commaSplit[i].contains("(") && !commaSplit[i].contains(")")) {
+				//if (!commaSplit[i].contains("(") && !commaSplit[i].contains(")")) {
 					fields.add(commaSplit[i].trim());
-				}
+				//}
 			}
 		}
 		return fields;

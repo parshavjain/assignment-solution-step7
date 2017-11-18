@@ -79,10 +79,13 @@ public class CsvGroupByQueryProcessor implements QueryProcessingEngine {
 				for(String strings : dataSet.getGroupByResult().keySet()) {
 					Map<String, DoubleSummaryStatistics> groupByAggregateResult = new HashMap<String, DoubleSummaryStatistics>();
 					groupByAggregateResult = calclulateGroupByWithAggregates(dataSet.getGroupByResult().get(strings), queryParameter);
-					dataSet.getGroupByAggregateResult().putAll(groupByAggregateResult);
+					for (String string : groupByAggregateResult.keySet()) {
+						dataSet.getGroupByAggregateResult().put(strings, groupByAggregateResult.get(string));
+					}
+					
 				}
 			}
-			
+			dataSet.setResult(null);
 		}
 		return dataSet;
 	}
@@ -136,17 +139,17 @@ public class CsvGroupByQueryProcessor implements QueryProcessingEngine {
 		if (null != result && !result.isEmpty() && null != queryParameter.getAggregateFunctions()
 				&& !queryParameter.getAggregateFunctions().isEmpty()) {
 			doubleSummaryMap = new HashMap<String, DoubleSummaryStatistics>();
-//			for (final AggregateFunction aggregateFunction : queryParameter.getAggregateFunctions()) {
-//				//for (final List<String> record : result) {
-//					aggregateFunction.setAggregateFieldIndex(queryParameter.getHeader().get(aggregateFunction.getField()));
-//					DoubleSummaryStatistics dSS = result.stream()
-//							.mapToDouble(list -> Double.parseDouble(list.get(aggregateFunction.getAggregateFieldIndex())))
-//							.filter(record -> filter.filterFields(queryParameter, record))
-//							.summaryStatistics();
-//					doubleSummaryMap.put(aggregateFunction.getField(), dSS);
-//				//}
-//
-//			}
+			for (final AggregateFunction aggregateFunction : queryParameter.getAggregateFunctions()) {
+				//for (final List<String> record : result) {
+					aggregateFunction
+					.setAggregateFieldIndex(null == queryParameter.getHeader().get(aggregateFunction.getField()) ? 0 : queryParameter.getHeader().get(aggregateFunction.getField()));
+					DoubleSummaryStatistics dSS = result.stream()
+							.mapToDouble(list -> Double.parseDouble(list.get(aggregateFunction.getAggregateFieldIndex())))
+							.summaryStatistics();
+					doubleSummaryMap.put(String.valueOf(aggregateFunction.getAggregateFieldIndex()), dSS);
+				//}
+
+			}
 		}
 		return doubleSummaryMap;
 	}

@@ -75,73 +75,157 @@ public class CsvAggregateQueryProcessor implements QueryProcessingEngine {
 				this.sortRecords(queryParameter, dataSet.getResult());
 			}
 
-			dataSet.setGroupByResult(this.calclulateGroupByWithFields(dataSet.getResult(), queryParameter));
-			aggregates = new ArrayList<AggregateFunction>();
-			for(String key : dataSet.getGroupByResult().keySet()) {
-				List<List<String>> temp = dataSet.getGroupByResult().get(key);
-				aggregates.addAll(calclulateAggregates(temp, header, queryParameter.getAggregateFunctions()));
-			}
-			dataSet.setAggregateFunctions(aggregates);
-			
+//			dataSet.setGroupByResult(this.calclulateGroupByWithFields(dataSet.getResult(), queryParameter));
+//			aggregates = new ArrayList<AggregateFunction>();
+//			for(String key : dataSet.getGroupByResult().keySet()) {
+//				List<List<String>> temp = dataSet.getGroupByResult().get(key);
+//				aggregates.addAll(calclulateAggregates(temp, header, queryParameter.getAggregateFunctions()));
+//			}
+			dataSet.setAggregateFunctions(
+					this.calclulateAggregates(result, queryParameter.getHeader(), queryParameter.getAggregateFunctions()));			
 		}
 		return dataSet;
 	}
 
 	/**
-	 * This method is used the calculate aggregates like min, max, sum, avg, sum
-	 * Used IntSummaryStatistics a java 8 built in class Used Streams and filters -
-	 * a java 8 concept
-	 **/
-	private List<AggregateFunction> calclulateAggregates(List<List<String>> result, Map<String, Integer> header,
-			List<AggregateFunction> aggregates) {
-		List<AggregateFunction> finalAggregateList = null;
-		if (null != result && !result.isEmpty() && null != aggregates && !aggregates.isEmpty()) {
-			finalAggregateList = new ArrayList<AggregateFunction>();
+	 * @param queryParameter
+	 * @param groupedDataSetMap
+	 * @param dataSetMap
+	 * @throws NumberFormatException
+	 */
+	private List<AggregateFunction> calclulateAggregates(final List<List<String>> result, Map<String, Integer> header,
+			List<AggregateFunction> aggregates) throws NumberFormatException {
+		if (null != aggregates && null != result) {
 			for (final AggregateFunction aggregateFunction : aggregates) {
+				final StringBuilder stringBuilder = new StringBuilder(aggregateFunction.getFunction());
+				stringBuilder.append("(" + aggregateFunction.getField() + ")");
 				aggregateFunction.setAggregateFieldIndex(header.get(aggregateFunction.getField()));
 				switch (aggregateFunction.getFunction()) {
 				case "count":
-					aggregateFunction.setResult((int) result.stream()
-							.map(list -> list.get(aggregateFunction.getAggregateFieldIndex())).count());
+					final List<String> list = getCountAggregate(result, aggregateFunction);
+					aggregateFunction.setResult(list.size());
 					break;
 				case "min":
-					Optional<Integer> min = result.stream()
-							.map(list -> Integer.parseInt(list.get(aggregateFunction.getAggregateFieldIndex())))
-							.min(Integer::compare);
-					if (null != min) {
-						aggregateFunction.setResult(min.get());
-					}
+					final int min = getMinAggregate(result, aggregateFunction);
+					aggregateFunction.setResult(min);
 					break;
 				case "max":
-					Optional<Integer> max = result.stream()
-							.map(list -> Integer.parseInt(list.get(aggregateFunction.getAggregateFieldIndex())))
-							.max(Integer::compare);
-
-					if (null != max) {
-						aggregateFunction.setResult(max.get());
-					}
+					final int max = getMaxAggregate(result, aggregateFunction);
+					aggregateFunction.setResult(max);
 					break;
 				case "sum":
-					int sum = result.stream().map(list -> list.get(aggregateFunction.getAggregateFieldIndex()))
-							.mapToInt(Integer::parseInt).sum();
+					int sum = getSumAggregate(result, aggregateFunction);
 					aggregateFunction.setResult(sum);
 					break;
 				case "avg":
-					OptionalDouble average = result.stream()
-							.map(list -> list.get(aggregateFunction.getAggregateFieldIndex()))
-							.mapToInt(Integer::parseInt).average();
-					if (null != average) {
-						aggregateFunction.setResult(average.getAsDouble());
-					}
+					sum = (int) getAvgAggregate(result, aggregateFunction);
+					aggregateFunction.setResult(sum / result.size());
 					break;
 				default:
 					break;
 				}
-				finalAggregateList.add(aggregateFunction);
 			}
 		}
-		return finalAggregateList;
+		return aggregates;
 	}
+	/**
+	 * @param dataSetMap
+	 * @param aggregateFunction
+	 * @return
+	 */
+	private List<String> getCountAggregate(final List<List<String>> result, final AggregateFunction aggregateFunction) {
+		final List<String> list = new ArrayList<String>();
+		for (List<String> record : result) {
+			final String value = record.get(aggregateFunction.getAggregateFieldIndex());
+			if (null != value && !value.isEmpty()) {
+				list.add(value);
+			}
+		}
+		return list;
+	}
+
+	/**
+	 * Get Average Value.
+	 * 
+	 * @param dataSetMap
+	 * @param aggregateFunction
+	 * @return
+	 * @throws NumberFormatException
+	 */
+	private double getAvgAggregate(final List<List<String>> result, final AggregateFunction aggregateFunction)
+			throws NumberFormatException {
+		double sum;
+		sum = 0;
+		for (List<String> record : result) {
+			final String fieldValue = record.get(aggregateFunction.getAggregateFieldIndex());
+			if (null != fieldValue) {
+				sum += Integer.parseInt(fieldValue);
+			}
+		}
+		return sum;
+	}
+
+	/**
+	 * Get Sum Value.
+	 * 
+	 * @param dataSetMap
+	 * @param aggregateFunction
+	 * @return
+	 * @throws NumberFormatException
+	 */
+	private int getSumAggregate(final List<List<String>> result, final AggregateFunction aggregateFunction)
+			throws NumberFormatException {
+		int sum = 0;
+		for (List<String> record : result) {
+			final String fieldValue = record.get(aggregateFunction.getAggregateFieldIndex());
+			if (null != fieldValue) {
+				sum += Integer.parseInt(fieldValue);
+			}
+		}
+		return sum;
+	}
+
+	/**
+	 * Get Max Value. 
+	 * @param dataSetMap
+	 * @param aggregateFunction
+	 * @param max
+	 * @return
+	 * @throws NumberFormatException
+	 */
+	private int getMaxAggregate(final List<List<String>> result, final AggregateFunction aggregateFunction)
+			throws NumberFormatException {
+		int max = 0;
+		for (List<String> record : result) {
+			final String fieldValue = record.get(aggregateFunction.getAggregateFieldIndex());
+			if (null != fieldValue && max < Integer.parseInt(fieldValue)) {
+				max = Integer.parseInt(fieldValue);
+			}
+		}
+		return max;
+	}
+
+	/**
+	 * Get Min Value.
+	 * 
+	 * @param dataSetMap
+	 * @param aggregateFunction
+	 * @return
+	 * @throws NumberFormatException
+	 */
+	private int getMinAggregate(final List<List<String>> result, final AggregateFunction aggregateFunction)
+			throws NumberFormatException {
+		int min = Integer.MAX_VALUE;
+		for (List<String> record : result) {
+			final String fieldValue = record.get(aggregateFunction.getAggregateFieldIndex());
+			if (null != fieldValue && min > Integer.parseInt(fieldValue)) {
+				min = Integer.parseInt(fieldValue);
+			}
+		}
+		return min;
+	}
+
+
 
 	private Map<String, List<List<String>>> calclulateGroupByWithFields(List<List<String>> result,
 			QueryParameter queryParameter) {

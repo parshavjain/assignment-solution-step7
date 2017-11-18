@@ -23,7 +23,10 @@ public class Filter {
 		if (null != queryParameter && null != queryParameter.getFields() && null != queryParameter.getHeader()) {
 			if (null != queryParameter.getAggregateFunctions()) {
 				for (AggregateFunction aggregateFunction : queryParameter.getAggregateFunctions()) {
-					queryParameter.getFields().add(aggregateFunction.getField());
+					String field = aggregateFunction.getField();
+					int index1 = field.indexOf('(');
+					int index2 = field.indexOf(')');
+					queryParameter.getFields().add(aggregateFunction.getField().substring(index1, index2));
 				}
 			}
 			for (String field : queryParameter.getFields()) {

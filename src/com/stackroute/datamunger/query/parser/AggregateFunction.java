@@ -14,7 +14,7 @@ public class AggregateFunction {
 	
 	private String field;
 
-	private double result;
+	private int result;
 
 	private String function;
 
@@ -36,11 +36,11 @@ public class AggregateFunction {
 		this.field = field;
 	}
 
-	public double getResult() {
+	public int getResult() {
 		return result;
 	}
 
-	public void setResult(double result) {
+	public void setResult(int result) {
 		this.result = result;
 	}
 
