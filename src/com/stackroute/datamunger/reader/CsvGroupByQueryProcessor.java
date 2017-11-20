@@ -1,7 +1,5 @@
 package com.stackroute.datamunger.reader;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,11 +14,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import javax.lang.model.element.Element;
-
 import com.stackroute.datamunger.query.DataSet;
 import com.stackroute.datamunger.query.Filter;
-import com.stackroute.datamunger.query.GroupedDataSet;
 import com.stackroute.datamunger.query.parser.AggregateFunction;
 import com.stackroute.datamunger.query.parser.QueryParameter;
 
@@ -39,7 +34,7 @@ public class CsvGroupByQueryProcessor implements QueryProcessingEngine {
 
 		// read header
 		final List<String> headerList = getHeader(queryParameter.getFile());
-		Map<String, Integer> header = IntStream.range(0, headerList.size()).boxed()
+		header = IntStream.range(0, headerList.size()).boxed()
 				.collect(Collectors.toMap(headerList::get, Function.identity()));
 
 		// Setting Header Map.
@@ -64,7 +59,7 @@ public class CsvGroupByQueryProcessor implements QueryProcessingEngine {
 
 			filter = new Filter();
 			dataSet.setResult(result.stream()
-									.filter(list -> filter.isRequiredRecord(queryParameter, list))
+									.filter(record -> filter.isRequiredRecord(queryParameter, record))
 									.collect(Collectors.toList()));
 			
 			// Sort Records of List.
@@ -73,7 +68,10 @@ public class CsvGroupByQueryProcessor implements QueryProcessingEngine {
 				this.sortRecords(queryParameter, dataSet.getResult());
 			}
 
+			//Calculate group by field.
 			dataSet.setGroupByResult(this.calclulateGroupByWithFields(dataSet.getResult(), queryParameter));
+			
+			//Calculate group by field with aggregates.
 			if (null != queryParameter.getAggregateFunctions()) {
 				dataSet.setGroupByAggregateResult(new HashMap<String, DoubleSummaryStatistics>());
 				for(String strings : dataSet.getGroupByResult().keySet()) {
@@ -82,7 +80,6 @@ public class CsvGroupByQueryProcessor implements QueryProcessingEngine {
 					for (String string : groupByAggregateResult.keySet()) {
 						dataSet.getGroupByAggregateResult().put(strings, groupByAggregateResult.get(string));
 					}
-					
 				}
 			}
 			dataSet.setResult(null);
@@ -94,24 +91,20 @@ public class CsvGroupByQueryProcessor implements QueryProcessingEngine {
 	 * This method is used to calculate group by summary with fields. It means along
 	 * with group by, some other fields also present in given query.
 	 **/
-
 	private Map<String, List<List<String>>> calclulateGroupByWithFields(List<List<String>> result,
 			QueryParameter queryParameter) {
 		Map<String, List<List<String>>> map = null;
 		if (null != queryParameter.getGroupByFields()) {
 			map = new HashMap<String, List<List<String>>>();
 			for (String groupByField : queryParameter.getGroupByFields()) {
-				final int index = queryParameter.getHeader().get(groupByField);
 				for (List<String> record : result) {
+					final int index = getGroupByFieldIndex(record, groupByField);
 					List<List<String>> tempList = map.get(record.get(index));
 					if (null == tempList) {
 						tempList = new ArrayList<List<String>>();
 					}
 					tempList.add(record);
-//					List<List<String>> fList = tempList.stream()
-//													   .map(list -> filter.filterFields(queryParameter, list))
-//													   .filter(list -> !list.isEmpty())
-//													   .collect(Collectors.toList());
+					
 					map.put(record.get(index), tempList);
 				}
 			}
@@ -124,7 +117,11 @@ public class CsvGroupByQueryProcessor implements QueryProcessingEngine {
 	 **/
 	private int getGroupByFieldIndex(List<String> selectedFields, String groupByField) {
 		
-		return 0;
+		if(null == header.get(groupByField)) {
+			return 0;
+		}
+		
+		return header.get(groupByField);
 	}
 
 	/**

@@ -2,7 +2,7 @@ package com.stackroute.datamunger.query;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Stack;
 
 import com.stackroute.datamunger.query.parser.AggregateFunction;
 import com.stackroute.datamunger.query.parser.QueryParameter;
@@ -48,7 +48,7 @@ public class Filter {
 	 * based on 'where' condition given in the query. Multiple conditions may be
 	 * exist in "where" part of the query.
 	 **/
-	public boolean isRequiredRecord(QueryParameter queryParameter, List<String> record) {
+	/*public boolean isRequiredRecord(QueryParameter queryParameter, List<String> record) {
 		boolean finalResult = true;
 		if (null != queryParameter && null != queryParameter.getRestrictions() && null != queryParameter.getHeader()) {
 			finalResult = false;
@@ -63,10 +63,10 @@ public class Filter {
 				list.add(recordIndex < record.size() ? record.get(recordIndex) : "");
 				final boolean result = evaluateRelationalExpression(list, queryParameter.getRestrictions().get(i));
 
-				/*
+				
 				 * check for multiple conditions in where clause for eg: where salary>20000 and
 				 * city=Bangalore for eg: where salary>20000 or city=Bangalore and dept!=Sales
-				 */
+				 
 				if ("and".equals(logicalOp)) {
 					finalResult = finalResult && result;
 				} else if ("or".equals(logicalOp)) {
@@ -80,8 +80,73 @@ public class Filter {
 			}
 		}
 		return finalResult;
+	}*/
+
+	/**
+	 * This method takes record as input and return true if the record is required
+	 * based on 'where' condition given in the query. Multiple conditions may be
+	 * exist in "where" part of the query.
+	 **/
+	public boolean isRequiredRecord(QueryParameter queryParameter, List<String> record) {
+		boolean finalResult = true;
+		if (null != queryParameter && null != queryParameter.getRestrictions() && null != queryParameter.getHeader()) {
+			finalResult = false;
+			int index = 0;
+			List<String>condList = new ArrayList<String>();
+			for (int i = 0; i < queryParameter.getRestrictions().size(); i++) {
+				List<String> list = new ArrayList<String>();
+				int recordIndex = queryParameter.getHeader().get(queryParameter.getRestrictions().get(i).getPropertyName());
+				list.add(recordIndex < record.size() ? record.get(recordIndex) : "");
+				final boolean result = evaluateRelationalExpression(list, queryParameter.getRestrictions().get(i));
+				condList.add(String.valueOf(result));
+				
+				if (null != queryParameter.getLogicalOperators() && !queryParameter.getLogicalOperators().isEmpty()
+						&& index < queryParameter.getLogicalOperators().size()) {
+					condList.add(queryParameter.getLogicalOperators().get(index));
+					index++;
+				}
+			}
+			
+			//Stack implementation.
+			if (!condList.isEmpty()) {
+				finalResult = calculateExpressions(finalResult, condList);
+			}		
+		}
+		return finalResult;
 	}
 
+	/**
+	 * @param finalResult
+	 * @param condList
+	 * @return
+	 */
+	private boolean calculateExpressions(boolean finalResult, List<String> condList) {
+
+		Stack<String> conditionStack = new Stack<String>();
+		for (int i = 0; i < condList.size(); i++) {
+			if (condList.get(i).equals("and")) {
+				String temp = conditionStack.pop();
+				boolean result = "true".equals(temp) ? true : false;
+				i++;
+				result = result && condList.get(i).equals("true") ? true : false;
+				conditionStack.push(String.valueOf(result));
+			} else if (condList.get(i).equals("or")) {
+				conditionStack.push(condList.get(i));
+			} else {
+				conditionStack.push(condList.get(i));
+			}
+		}
+
+		while (!conditionStack.isEmpty()) {
+			String temp = conditionStack.pop();
+			if (!temp.equals("or")) {
+				finalResult = finalResult || (temp.equals("true") ? true : false);
+			}
+		}
+		return finalResult;
+	}
+
+	
 	/**
 	 * This method return true if the record is required 'where' condition If not it
 	 * returns false.

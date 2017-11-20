@@ -559,7 +559,6 @@ public class DataMungerTest{
 
 		DataSet dataSet = query.executeQuery("select * from data/ipl.csv");
 		assertNotNull("testSelectAllWithoutWhere() : Empty Dataset is returned", dataSet);
-		display("testSelectAllWithoutWhere", dataSet);
 
 		assertNull("testSelectAllWithoutWhere() : getAggregateFunctions method should return null",
 				dataSet.getAggregateFunctions());
@@ -586,7 +585,6 @@ public class DataMungerTest{
 		int expectedrows = 577;
 		DataSet dataSet = query.executeQuery("select city,winner,team1,team2 from data/ipl.csv");
 		assertNotNull("testSelectColumnsWithoutWhere() : Empty Dataset is returned", dataSet);
-		display("testSelectColumnsWithoutWhere", dataSet);
 
 		assertNull(
 				"testSelectColumnsWithoutWhere() : getAggregateFunctions method is returning some value while it's not expected to",
@@ -615,7 +613,6 @@ public class DataMungerTest{
 		DataSet dataSet = query.executeQuery(
 				"select season,city,winner,team1,team2,player_of_match from data/ipl.csv where season > 2015");
 		assertNotNull("testWithWhereGreaterThan() : Empty Dataset is returned", dataSet);
-		display("testWithWhereGreaterThan", dataSet);
 
 		assertNull(
 				"testWithWhereGreaterThan() : getAggregateFunctions method is returning some value while it's not expected to",
@@ -644,8 +641,6 @@ public class DataMungerTest{
 		DataSet dataSet = query
 				.executeQuery("select city,winner,team1,team2,player_of_match from data/ipl.csv where season < 2015");
 		assertNotNull("testWithWhereLessThan() : Empty Dataset is returned", dataSet);
-		display("testWithWhereLessThan", dataSet);
-
 		assertNull(
 				"testWithWhereLessThan() : getAggregateFunctions method is returning some value while it's not expected to",
 				dataSet.getAggregateFunctions());
@@ -672,7 +667,6 @@ public class DataMungerTest{
 		DataSet dataSet = query.executeQuery(
 				"select season,city,winner,team1,team2,player_of_match from data/ipl.csv where season <= 2015");
 		assertNotNull("testWithWhereLessThanOrEqualTo() : Empty Dataset is returned", dataSet);
-		display("testWithWhereLessThanOrEqualTo", dataSet);
 
 		assertNull(
 				"testWithWhereLessThanOrEqualTo() : getAggregateFunctions method is returning some value while it's not expected to",
@@ -703,8 +697,6 @@ public class DataMungerTest{
 		DataSet dataSet = query
 				.executeQuery("select city,winner,team1,team2,player_of_match from data/ipl.csv where season >= 2015");
 		assertNotNull("testWithWhereGreaterThanOrEqualTo() : Empty Dataset is returned", dataSet);
-		display("testWithWhereGreaterThanOrEqualTo", dataSet);
-
 		assertNull(
 				"testWithWhereGreaterThanOrEqualTo() : getAggregateFunctions method is returning some value while it's not expected to",
 				dataSet.getAggregateFunctions());
@@ -734,7 +726,6 @@ public class DataMungerTest{
 		DataSet dataSet = query.executeQuery(
 				"select city,team1,team2,winner,toss_decision from data/ipl.csv where toss_decision != bat");
 		assertNotNull("testWithWhereNotEqualTo() : Empty Dataset is returned", dataSet);
-		display("testWithWhereNotEqualTo", dataSet);
 
 		assertNull(
 				"testWithWhereNotEqualTo() : getAggregateFunctions method is returning some value while it's not expected to",
@@ -763,7 +754,6 @@ public class DataMungerTest{
 		DataSet dataSet = query.executeQuery(
 				"select season,city,winner,team1,team2,player_of_match from data/ipl.csv where season >= 2013 and season <= 2015");
 		assertNotNull("testWithWhereEqualAndNotEqual() : Empty Dataset is returned", dataSet);
-		display("testWithWhereEqualAndNotEqual", dataSet);
 
 		assertNull(
 				"testWithWhereEqualAndNotEqual() : getAggregateFunctions method is returning some value while it's not expected to",
@@ -792,7 +782,6 @@ public class DataMungerTest{
 		DataSet dataSet = query.executeQuery(
 				"select city,winner,team1,team2,player_of_match from data/ipl.csv where season >= 2013 and toss_decision != bat");
 		assertNotNull("testWithWhereTwoConditionsEqualOrNotEqual() : Empty Dataset is returned", dataSet);
-		display("testWithWhereTwoConditionsEqualOrNotEqual", dataSet);
 
 		assertNull(
 				"testWithWhereTwoConditionsEqualOrNotEqual() : getAggregateFunctions method is returning some value while it's not expected to",
@@ -823,7 +812,6 @@ public class DataMungerTest{
 		DataSet dataSet = query.executeQuery(
 				"select city,winner,team1,team2,player_of_match from data/ipl.csv where season >= 2015 or toss_decision != bat and city = bangalore");
 		assertNotNull("testWithWhereThreeConditionsEqualOrNotEqual() : Empty Dataset is returned", dataSet);
-		display("testWithWhereThreeConditionsEqualOrNotEqual", dataSet);
 
 		assertNull(
 				"testWithWhereThreeConditionsEqualOrNotEqual() : getAggregateFunctions method is returning some value while it's not expected to",
@@ -854,7 +842,6 @@ public class DataMungerTest{
 		DataSet dataSet = query.executeQuery(
 				"select city,winner,team1,team2,player_of_match from data/ipl.csv where season >= 2013 or toss_decision != bat and city = Bangalore order by winner");
 		assertNotNull("testWithWhereThreeConditionsOrderBy() : Empty Dataset is returned", dataSet);
-		display("testWithWhereThreeConditionsOrderBy", dataSet);
 
 		assertNull("testWithWhereThreeConditionsOrderBy() : Aggregate Functions should return null",
 				dataSet.getAggregateFunctions());
@@ -907,7 +894,6 @@ public class DataMungerTest{
 		DataSet dataSet = query
 				.executeQuery("select city,winner,team1,team2,player_of_match from data/ipl.csv order by city");
 		assertNotNull("testWithOrderBy() : Empty Dataset is returned", dataSet);
-		display("testWithOrderBy", dataSet);
 
 		assertNull("testWithOrderBy() : Group by Resultset should not return any value", dataSet.getGroupByResult());
 		assertNull("testWithOrderBy() : Aggregate Functions should return null", dataSet.getAggregateFunctions());
@@ -933,7 +919,6 @@ public class DataMungerTest{
 		int expectedrows = 1;
 		DataSet dataSet = query.executeQuery("select count(city) from data/ipl.csv");
 		assertNotNull("testSelectCountColumnsWithoutWhere() : Empty Dataset is returned", dataSet);
-		display("testSelectCountColumnsWithoutWhere", dataSet);
 
 		assertNull("testSelectCountColumnsWithoutWhere2() : Group by Resultset should not return any value",
 				dataSet.getGroupByResult());
@@ -960,7 +945,6 @@ public class DataMungerTest{
 		int expectedrows = 1;
 		DataSet dataSet = query.executeQuery("select sum(win_by_runs) from data/ipl.csv");
 		assertNotNull("testSelectSumColumnsWithoutWhere() : Empty Dataset is returned", dataSet);
-		display("testSelectSumColumnsWithoutWhere", dataSet);
 
 		assertNull("testSelectCountColumnsWithoutWhere2() : Group by Resultset should not return any value",
 				dataSet.getGroupByResult());
@@ -974,7 +958,7 @@ public class DataMungerTest{
 				"win_by_runs", dataSet.getAggregateFunctions().get(0).getField());
 		assertEquals("testSelectSumColumnsWithoutWhere() : Aggregate Function is not returning the correct aggregators",
 				"sum", dataSet.getAggregateFunctions().get(0).getFunction());
-
+		//changed.
 		assertTrue("testSelectSumColumnsWithoutWhere() : Get Result method does not return the expected row count",
 				dataSet.getResult().toString().contains("7914"));
 
@@ -986,8 +970,6 @@ public class DataMungerTest{
 		DataSet dataSet = query.executeQuery(
 				"select count(city),sum(win_by_runs),min(win_by_runs),max(win_by_runs),avg(win_by_runs) from data/ipl.csv");
 		assertNotNull("testSelectCountColumnsWithoutWhere2() : Empty Dataset is returned", dataSet);
-		display("testSelectCountColumnsWithoutWhere2", dataSet);
-
 		assertNull(
 				"testSelectCountColumnsWithoutWhere2() : Group by Aggregate Result is returning some value while it's not expected",
 				dataSet.getGroupByAggregateResult());
@@ -1013,7 +995,6 @@ public class DataMungerTest{
 		queryString = "select city,count(*) from data/ipl.csv group by city";
 		DataSet dataSet = query.executeQuery(queryString);
 		assertNotNull("testSelectColumnsWithoutWhereWithGroupByCount() : Empty Dataset is returned", dataSet);
-		displayGroupByAggregateResult(queryString, dataSet.getGroupByAggregateResult());
 
 		assertNotNull("testSelectColumnsWithoutWhereWithGroupByCount() : Group by Resultset is null",
 				dataSet.getGroupByAggregateResult());
@@ -1044,7 +1025,6 @@ public class DataMungerTest{
 		queryString = "select city,sum(season) from data/ipl.csv group by city";
 		DataSet dataSet = query.executeQuery(queryString);
 		assertNotNull("testSelectColumnsWithoutWhereWithGroupBySum() : Empty Dataset is returned", dataSet);
-		displayGroupByAggregateResult(queryString, dataSet.getGroupByAggregateResult());
 
 		assertNotNull("testSelectColumnsWithoutWhereWithGroupBySum() : Group by Resultset is null",
 				dataSet.getGroupByAggregateResult());
@@ -1073,7 +1053,6 @@ public class DataMungerTest{
 		queryString = "select city,min(season) from data/ipl.csv group by city";
 		DataSet dataSet = query.executeQuery(queryString);
 		assertNotNull("testSelectColumnsWithoutWhereWithGroupByMin() : Empty Dataset is returned", dataSet);
-		displayGroupByAggregateResult(queryString, dataSet.getGroupByAggregateResult());
 
 		assertNotNull("testSelectColumnsWithoutWhereWithGroupByMin() : Group by Resultset is null",
 				dataSet.getGroupByAggregateResult());
@@ -1103,7 +1082,6 @@ public class DataMungerTest{
 		queryString = "select city,max(win_by_wickets) from data/ipl.csv group by city";
 		DataSet dataSet = query.executeQuery(queryString);
 		assertNotNull("testSelectColumnsWithoutWhereWithGroupByMax() : Empty Dataset is returned", dataSet);
-		displayGroupByAggregateResult(queryString, dataSet.getGroupByAggregateResult());
 
 		assertNotNull("testSelectColumnsWithoutWhereWithGroupByMax() : Group by Resultset is null",
 				dataSet.getGroupByAggregateResult());
@@ -1138,7 +1116,6 @@ public class DataMungerTest{
 		queryString = "select city,avg(win_by_wickets) from data/ipl.csv group by city";
 		DataSet dataSet = query.executeQuery("select city,avg(win_by_wickets) from data/ipl.csv group by city");
 		assertNotNull("testSelectColumnsWithoutWhereWithGroupByAvg() : Empty Dataset is returned", dataSet);
-		displayGroupByAggregateResult(queryString, dataSet.getGroupByAggregateResult());
 
 		assertNotNull("testSelectColumnsWithoutWhereWithGroupByAvg() : Group by Resultset is null",
 				dataSet.getGroupByAggregateResult());
@@ -1163,37 +1140,6 @@ public class DataMungerTest{
 				"testSelectColumnsWithoutWhereWithGroupByAvg() : Group by Aggregate result is not returning the expected data",
 				dataSet.getGroupByAggregateResult().toString().contains(
 						"Ranchi=DoubleSummaryStatistics{count=7, sum=24.000000, min=0.000000, average=3.428571, max=6.000000}"));
-
-	}
-
-	private void display(String testCaseName, DataSet records) {
-		System.out.println("\nTest Case Name : " + testCaseName);
-		records.getResult().forEach(System.out::println);
-
-	}
-
-	private void displayGroupByAggregateResult(String queryString, Map<String, DoubleSummaryStatistics> groupByResult) {
-
-		System.out.println("\nGiven Query : " + queryString);
-		groupByResult.entrySet().forEach(System.out::println);
-	}
-
-	private void displayGroupByResult(String queryString, Map<String, List<List<String>>> groupByResult) {
-
-		System.out.println("\nGiven Query : " + queryString);
-		if (groupByResult != null && groupByResult.entrySet() != null) {
-			groupByResult.entrySet().forEach(System.out::println);
-		} else {
-			System.out.println("No Group by result");
-		}
-
-	}
-
-	private void display(String testCaseName, HashMap dataSet) {
-
-		System.out.println(testCaseName);
-		System.out.println("================================================================");
-		System.out.println(dataSet);
 
 	}
 
