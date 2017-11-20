@@ -808,7 +808,7 @@ public class DataMungerTest{
 
 	@Test
 	public void testWithWhereThreeConditionsEqualOrNotEqual() {
-		int expectedrows = 51;
+		int expectedrows = 154;
 		DataSet dataSet = query.executeQuery(
 				"select city,winner,team1,team2,player_of_match from data/ipl.csv where season >= 2015 or toss_decision != bat and city = bangalore");
 		assertNotNull("testWithWhereThreeConditionsEqualOrNotEqual() : Empty Dataset is returned", dataSet);
@@ -831,14 +831,17 @@ public class DataMungerTest{
 				"[Bangalore, Royal Challengers Bangalore, Rajasthan Royals, Royal Challengers Bangalore, R Vinay Kumar]",
 				dataSet.getResult().get(26).toString());
 		assertEquals("testWithWhereThreeConditionsEqualOrNotEqual() :  Get Result does not return expected values",
-				"[Bangalore, Sunrisers Hyderabad, Sunrisers Hyderabad, Royal Challengers Bangalore, BCJ Cutting]",
+				"[Ahmedabad, Rajasthan Royals, Chennai Super Kings, Rajasthan Royals, AM Rahane]",
 				dataSet.getResult().get(50).toString());
+		assertEquals("testWithWhereThreeConditionsEqualOrNotEqual() :  Get Result does not return expected values",
+				"[Bangalore, Royal Challengers Bangalore, Gujarat Lions, Royal Challengers Bangalore, AB de Villiers]",
+				dataSet.getResult().get(150).toString());
 
 	}
 
 	@Test
 	public void testWithWhereThreeConditionsOrderBy() {
-		int expectedrows = 53;
+		int expectedrows = 278;
 		DataSet dataSet = query.executeQuery(
 				"select city,winner,team1,team2,player_of_match from data/ipl.csv where season >= 2013 or toss_decision != bat and city = Bangalore order by winner");
 		assertNotNull("testWithWhereThreeConditionsOrderBy() : Empty Dataset is returned", dataSet);
@@ -857,11 +860,20 @@ public class DataMungerTest{
 				"[Bangalore, , Royal Challengers Bangalore, Rajasthan Royals, ]",
 				dataSet.getResult().get(0).toString());
 		assertEquals("testWithWhereThreeConditionsOrderBy() : Get Result does not return expected values",
-				"[Bangalore, Royal Challengers Bangalore, Rajasthan Royals, Royal Challengers Bangalore, JH Kallis]",
+				"[Chennai, Chennai Super Kings, Chennai Super Kings, Sunrisers Hyderabad, BB McCullum]",
 				dataSet.getResult().get(26).toString());
 		assertEquals("testWithWhereThreeConditionsOrderBy() : Get Result does not return expected values",
-				"[Bangalore, Sunrisers Hyderabad, Sunrisers Hyderabad, Royal Challengers Bangalore, BCJ Cutting]",
+				"[Rajkot, Delhi Daredevils, Gujarat Lions, Delhi Daredevils, RR Pant]",
 				dataSet.getResult().get(52).toString());
+		assertEquals("testWithWhereThreeConditionsOrderBy() : Get Result does not return expected values",
+				"[Ranchi, Pune Warriors, Pune Warriors, Kolkata Knight Riders, MK Pandey]",
+				dataSet.getResult().get(170).toString());
+		assertEquals("testWithWhereThreeConditionsOrderBy() : Get Result does not return expected values",
+				"[Delhi, Rising Pune Supergiants, Delhi Daredevils, Rising Pune Supergiants, AM Rahane]",
+				dataSet.getResult().get(200).toString());
+		assertEquals("testWithWhereThreeConditionsOrderBy() : Get Result does not return expected values",
+				"[Bangalore, Sunrisers Hyderabad, Sunrisers Hyderabad, Royal Challengers Bangalore, BCJ Cutting]",
+				dataSet.getResult().get(277).toString());
 
 	}
 
